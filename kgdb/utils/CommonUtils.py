@@ -66,7 +66,7 @@ def vmmap(pid):
         info[i][0][1] = int(info[i][0][1], 16)
     for inf in info:
         if len(inf) == 5:
-            inf.append('mmap areas')
+            inf.append('System Mmap Areas')
     return info
     
     

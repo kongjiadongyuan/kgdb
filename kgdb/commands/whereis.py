@@ -18,12 +18,12 @@ class whereis(gdb.Command):
         return None, None, None
     
     def invoke(self, args, from_tty):
-        argv = gdb.string_to_argv(args)
-        if len(argv) != 1:
-            raise gdb.GdbError("ERROR. Use help whereis to get more info.")
         pid = gdb.execute('pid', to_string = True)
         pid = int(pid)
-        address = utils.to_int(argv[0])
+        try:
+            address = eval(args)
+        except Exception:
+            raise Exception("parameter error: " + args)
         low, high, path = self.find(pid, address)
         if not low == None:
             print(hex(low) + '-' + hex(high) + '\t\t' + path)
