@@ -18,7 +18,7 @@ class whereis(gdb.Command):
         return None, None, None
     
     def invoke(self, args, from_tty):
-        pid = gdb.execute('pid', to_string = True)
+        pid = gdb.selected_inferior().pid
         pid = int(pid)
         try:
             address = eval(args)

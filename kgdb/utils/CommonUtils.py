@@ -1,4 +1,6 @@
 import os.path
+import gdb
+import re
 
 def getbase(pid, content):
     mapspath = os.path.join('/proc', str(pid), 'maps')
@@ -20,6 +22,17 @@ def getbase(pid, content):
         return 0
     return res
 
+def getaddr(sym):
+    if not type(sym) == str:
+        raise Exception("getaddr Error: sym must be string")
+    res = gdb.execute('x/x &' + sym, to_string = True)
+    if 'No symbol' in res:
+        return 0
+    else:
+        res = re.search('0x.*[0-9a-fA-F] ', res)
+        res = res.group()
+        res = int(res[:-1], 16)
+    return res
 
 
 def vmmap(pid):
