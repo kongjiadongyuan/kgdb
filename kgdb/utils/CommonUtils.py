@@ -101,3 +101,47 @@ def to_int(s):
     except ValueError:
         raise ValueError("invalid literal for to_int(): " + s)
         
+def qword(addr):
+    res = gdb.execute('x/gx ' + hex(addr), to_string = True)
+    if 'Cannot access memory' in res:
+        raise Exception("address error")
+    res = res.split('\t')[1][:-1]
+    try:
+        res = eval(res)
+    except Exception:
+        raise
+    return res
+
+def dword(addr):
+    res = gdb.execute('x/wx ' + hex(addr), to_string = True)
+    if 'Cannot access memory' in res:
+        raise Exception("address error")
+    res = res.split('\t')[1][:-1]
+    try:
+        res = eval(res)
+    except Exception:
+        raise
+    return res
+
+def word(addr):
+    res = gdb.execute('x/hx ' + hex(addr), to_string = True)
+    if 'Cannot access memory' in res:
+        raise Exception("address error")
+    res = res.split('\t')[1][:-1]
+    try:
+        res = eval(res)
+    except Exception:
+        raise
+    return res
+
+def byte(addr):
+    res = gdb.execute('x/bx ' + hex(addr), to_string = True)
+    if 'Cannot access memory' in res:
+        raise Exception("address error")
+    res = res.split('\t')[1][:-1]
+    try:
+        res = eval(res)
+    except Exception:
+        raise
+    return res
+
