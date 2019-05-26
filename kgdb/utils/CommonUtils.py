@@ -2,6 +2,10 @@ import os.path
 import gdb
 import re
 
+def getpid():
+    return gdb.selected_inferior().pid
+    
+
 def getbase(pid, content):
     mapspath = os.path.join('/proc', str(pid), 'maps')
     if not os.path.exists(mapspath):
