@@ -149,3 +149,8 @@ def byte(addr):
         raise
     return res
 
+def readmem(addr, size):
+    res = b''
+    for idx in range(size):
+        res += bytes([byte(addr + idx)])
+    return res
